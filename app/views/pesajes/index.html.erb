@@ -40,20 +40,11 @@
       <tr>
         <td><%= a.id_2 %></td>
         <td><%= maximos_x_vaca[a.id_2] %></td>
-        <% produccion = este_animal.order("pesaje ASC") %>
-        <% base = produccion.first.del * produccion.first.lvd.to_f %>
-        <% produccion.each_with_index do |f, i| %>
-          <% if i > 1 %>
-            <% promedio = (f.lvd.to_f + produccion[i-1].lvd.to_f )/2 %>
-            <% puts promedio %>
-            <% dias = (f.pesaje - produccion[i-1].pesaje).to_i %>
-            <% puts dias %>
-            <% base = base + (promedio * dias) %>
-          <% end %>
-        <% end %>
+        
         <td><%= este_animal.order("pesaje DESC").first.del %></td>
-        <td><%= base.round(2) %></td>
-        <Td><%= este_animal.average("lvd").round(2) %>
+        <% resultado = Pesaje.produccion_acumulada(este_animal) %>
+        <td><%= resultado.round(2) %></td>
+        <td><%= este_animal.average("lvd").round(2) %>
       </tr>
       <% end %>
     </tbody>
