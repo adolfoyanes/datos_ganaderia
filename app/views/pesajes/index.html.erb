@@ -52,12 +52,45 @@
         <% end %>
       </tr>
       <tr>
-        <% line_chart este_animal.pluck(:del, :lvd), curve: false %>
+        <%# line_chart este_animal.pluck(:del, :lvd), curve: false %>
 
-        <%= scatter_chart [
+        <%# scatter_chart [
                           {name: "Lactancia 1", data: este_animal.where("lactancia"=>1).order("del asc").pluck(:del, :lvd)},
                           {name: "Lactancia 2", data: este_animal.where("lactancia"=>2).order("del asc").pluck(:del, :lvd)}
                         ] %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<div>
+ <% animales = Pesaje.select("id_2").group("id_2") %>
+  <table class="table table-striped" style="width: 50%;"><h2>Lactancia Ajustada a 305 dias</h2>
+    <thead>
+      <th style="text-align:center">Id 2</th>
+      <% lactancias_totales.each do |l| %>
+        <th style="text-align:center">Lactancia <%= l.lactancia %></th>
+      <% end %>
+    </thead>
+    <tbody>
+      <% animales.each do |a| %>
+      <% este_animal = Pesaje.where("id_2"=>a.id_2) %>
+      <tr>
+        <td style="text-align:center"><%= a.id_2 %></td>
+        <% lactancias_totales.each do |l| %>
+          <% lact = este_animal.where(:lactancia => l.lactancia).order("del desc").first %>
+          <% if lact %>
+            <% if lact.del > 304 %>
+              <td style="text-align:center"><%= (Pesaje.produccion_acumulada_lactancia(este_animal, l.lactancia).round(2).to_f * (305.to_f/lact.del.to_f)).round(2)%></td>
+            <% else %>
+            <td style="text-align:center"><%= Pesaje.produccion_acumulada_lactancia(este_animal, l.lactancia).round(2).to_f %></td>
+            <% end %>
+          <% else %>
+            <td style="text-align:center">NA</td>
+          <% end %>
+        <% end %>
       </tr>
       <% end %>
     </tbody>
