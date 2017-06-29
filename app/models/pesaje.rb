@@ -41,5 +41,59 @@ class Pesaje < ApplicationRecord
             base = 0
         end
         return base
+    end ### cierra produccion_acumulada_lactancia
+
+    def self.promedio_x_animal(este_animal)
+        lactancias_totales = Pesaje.select("lactancia").group("lactancia").order("lactancia ASC")
+        acumulados = []
+        lactancias_totales.each do |f|
+            resultado = Pesaje.produccion_acumulada_lactancia(este_animal, f.lactancia).round(2)
+            
+            puts resultado
+            if resultado > 0 
+                el_del = este_animal.where("lactancia"=>f.lactancia).order("del DESC").first.del
+                if el_del > 304
+                    resultado = resultado * (305.to_f/el_del.to_f)
+                end
+                acumulados << resultado.round(2)
+            end
+        end
+        ## sacar promedio de acumulado 
+        promedio = acumulados.inject{ |sum, el| sum + el }.to_f / acumulados.size
+        ## devolver resultado
+        return promedio.round(2)
     end
-end
+
+    def self.promedio_total(animales)
+        promedios = []
+        animales.each do |a|
+            este_animal = Pesaje.where("id_2"=>a.id_2)
+            promedios << Pesaje.promedio_x_animal(este_animal)
+        end
+        promedio_global = promedios.inject{ |sum, el| sum + el }.to_f / promedios.size
+        return promedio_global.round(2)
+    end
+
+    def self.clasificacion(puntaje)
+        cla = ""
+        if puntaje <= 25
+            cla = "Descarte"
+        elsif puntaje <= 50
+            cla = "Malas"
+        elsif puntaje <= 75
+            cla = "Buena"
+        elsif puntaje <= 100
+            cla = "Excelente"
+        else
+            cla = "Elite"
+        end
+        return cla  
+    end
+
+
+
+
+
+
+
+end ## cierra modelo
