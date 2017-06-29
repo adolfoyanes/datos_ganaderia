@@ -1,0 +1,87 @@
+<%= form_for(vaca) do |f| %>
+  <% if vaca.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(vaca.errors.count, "error") %> prohibited this vaca from being saved:</h2>
+
+      <ul>
+      <% vaca.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :id_2 %>
+    <%= f.number_field :id_2 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :anonac %>
+    <%= f.number_field :anonac %>
+  </div>
+
+  <div class="field">
+    <%= f.label :padre %>
+    <%= f.text_field :padre %>
+  </div>
+
+  <div class="field">
+    <%= f.label :nropar %>
+    <%= f.number_field :nropar %>
+  </div>
+
+  <div class="field">
+    <%= f.label :grupo_racial %>
+    <%= f.text_field :grupo_racial %>
+  </div>
+
+  <div class="field">
+    <%= f.label :tipser %>
+    <%= f.text_field :tipser %>
+  </div>
+
+  <div class="field">
+    <%= f.label :toroas %>
+    <%= f.text_field :toroas %>
+  </div>
+
+  <div class="field">
+    <%= f.label :diagno %>
+    <%= f.text_field :diagno %>
+  </div>
+
+  <div class="field">
+    <%= f.label :fparto %>
+    <%= f.date_select :fparto %>
+  </div>
+
+  <div class="field">
+    <%= f.label :becerro %>
+    <%= f.text_field :becerro %>
+  </div>
+
+  <div class="field">
+    <%= f.label :sexo %>
+    <%= f.text_field :sexo %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pesonacer %>
+    <%= f.text_field :pesonacer %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pesodestete %>
+    <%= f.text_field :pesodestete %>
+  </div>
+
+  <div class="field">
+    <%= f.label :peso18 %>
+    <%= f.text_field :peso18 %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

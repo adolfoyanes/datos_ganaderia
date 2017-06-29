@@ -1,0 +1,106 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Vacas</h1>
+<%= link_to 'Ir a Pesajes', pesajes_path %>
+
+<% nacimientos = Vaca.where.not(Vaca.arel_table[:becerro].matches('%'+ "ABORTO" + '%')) %>
+<% abortos = Vaca.where(Vaca.arel_table[:becerro].matches('%'+ "ABORTO" + '%')) %>
+<div>
+  <ul>
+    <li>Nacimientos: <%= nacimientos.count %></li>
+    <li>Abortos: <%= abortos.count %></li>
+  </ul>
+  <ul>Nacimientos por año
+    <% year= Vaca.select("fparto").map{ |item| item.fparto.year }.uniq %>
+    <% year.each do |t| %>
+      <li><%= t %>: <%= nacimientos.where('extract(year  from fparto) = ?', t).count %></li>
+    <% end %>
+  </ul>
+
+  <ul>Abortos por año
+    <% year.each do |t| %>
+      <li><%= t %>: <%= abortos.where('extract(year  from fparto) = ?', t).count %></li>
+    <% end %>
+  </ul>
+
+  <ul>Peso Promedio al Nacer
+    <% year.each do |t| %>
+      <li><%= t %>: <%= nacimientos.where('extract(year  from fparto) = ?', t).average("pesonacer").to_f.round(2) %></li>
+    <% end %>
+  </ul>
+
+  <ul>Peso Promedio al Nacer
+    <% status= Vaca.select("diagno, count(id) as cantidad").group("diagno") %>
+    <% status.each do |t| %>
+      <li><%= t.diagno %>: <%= t.cantidad %></li>
+    <% end %>
+  </ul>
+
+
+
+</div>
+
+
+
+<table class="table table-striped" style="width: 50%;">
+  <thead>
+    <tr>
+      <th style="text-align:center">Id 2</th>
+      <th style="text-align:center">Año Nacimiento</th>
+      <th style="text-align:center">Padre</th>
+      <th style="text-align:center">Número de Partos</th>
+      <th style="text-align:center">Grupo racial</th>
+      <th style="text-align:center">Tipser</th>
+      <th style="text-align:center">Toroas</th>
+      <th style="text-align:center">Diagnóstico</th>
+      <th style="text-align:center">Fecha de Parto</th>
+      <th style="text-align:center">Becerro</th>
+      <th style="text-align:center">Sexo</th>
+      <th style="text-align:center">Peso al nacer</th>
+      <th style="text-align:center">Peso al destete</th>
+      <th style="text-align:center">Peso a 18</th>
+      <th style="text-align:center">Dias de Parida</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vacas.each do |vaca| %>
+      <tr>
+        <td style="text-align:center"><%= vaca.id_2 %></td>
+        <td style="text-align:center"><%= vaca.anonac %></td>
+        <td style="text-align:center"><%= vaca.padre %></td>
+        <td style="text-align:center"><%= vaca.nropar %></td>
+        <td style="text-align:center"><%= vaca.grupo_racial %></td>
+        <td style="text-align:center"><%= vaca.tipser %></td>
+        <td style="text-align:center"><%= vaca.toroas %></td>
+        <td style="text-align:center"><%= vaca.diagno %></td>
+        <td style="text-align:center"><%= vaca.fparto ? vaca.fparto.strftime("%d/%m/%Y") : "" %></td>
+        <td style="text-align:center"><%= vaca.becerro %></td>
+        <td style="text-align:center"><%= vaca.sexo %></td>
+        <td style="text-align:center"><%= vaca.pesonacer %></td>
+        <td style="text-align:center"><%= vaca.pesodestete %></td>
+        <td style="text-align:center"><%= vaca.peso18 %></td>
+        <td style="text-align:center"><%= (Date.today() - vaca.fparto).to_i %></td>
+        <td style="text-align:center"><%= link_to 'Show', vaca %></td>
+        <td style="text-align:center"><%= link_to 'Edit', edit_vaca_path(vaca) %></td>
+        <td style="text-align:center"><%= link_to 'Destroy', vaca, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+<div >
+  <%= form_tag import_vacas_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Cargar CSV" %>
+  <% end %>
+</div>
+
+<br>
+
+
+<%= link_to 'New Vaca', new_vaca_path %>

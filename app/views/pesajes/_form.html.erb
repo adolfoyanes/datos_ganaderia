@@ -1,0 +1,47 @@
+<%= form_for(pesaje) do |f| %>
+  <% if pesaje.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pesaje.errors.count, "error") %> prohibited this pesaje from being saved:</h2>
+
+      <ul>
+      <% pesaje.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :id_2 %>
+    <%= f.number_field :id_2 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :parto %>
+    <%= f.date_select :parto %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pesaje %>
+    <%= f.date_select :pesaje %>
+  </div>
+
+  <div class="field">
+    <%= f.label :del %>
+    <%= f.number_field :del %>
+  </div>
+
+  <div class="field">
+    <%= f.label :lvd %>
+    <%= f.text_field :lvd %>
+  </div>
+
+  <div class="field">
+    <%= f.label :raza %>
+    <%= f.number_field :raza %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

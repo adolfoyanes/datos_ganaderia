@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_2: 1
+  parto: 2017-06-28
+  pesaje: 2017-06-28
+  del: 1
+  lvd: 9.99
+  raza: 1
+
+two:
+  id_2: 1
+  parto: 2017-06-28
+  pesaje: 2017-06-28
+  del: 1
+  lvd: 9.99
+  raza: 1

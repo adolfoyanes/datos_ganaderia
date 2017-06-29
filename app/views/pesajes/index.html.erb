@@ -1,0 +1,105 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Pesajes</h1>
+<%= link_to 'Ir a Vacas', vacas_path %>
+
+<div>
+ <%  maximos_x_vaca = Pesaje.group("id_2").maximum(:del) %>
+ <% maximos = maximos_x_vaca.values %>
+ <p>Promedio Días de Lactancia: <%= (maximos.inject{ |sum, el| sum + el }.to_f / maximos.size).round(2) %> </p> 
+ <ul>Número de Animales
+  <% razas = Pesaje.select("raza, count(raza) as total").group("raza") %>
+  <% razas.each do |t| %>
+   <li> <%= t.raza %>: <%= t.total %> </li>
+  <% end %>
+ </ul>
+  <ul>Días promedio de lactancia
+ 
+  <% razas.each do |t| %>
+    <% maximos_raza = Pesaje.where("raza"=>t.raza).group("id_2").maximum(:del) %>
+    <% maximos_raza = maximos_raza.values %>
+   <li> <%= t.raza %>: <%= (maximos_raza.inject{ |sum, el| sum + el }.to_f / maximos_raza.size).round(2) %>  </li>
+  <% end %>
+ </ul>
+ 
+</div>
+
+<div>
+ <% animales = Pesaje.select("id_2").group("id_2") %>
+  <table class="table table-striped" style="width: 50%;">Resultados por animal
+    <thead>
+      <th>Id 2</th>
+      <th>Dias maximo de lactancia</th>
+      <th>Produccion Acumulada</th>
+      <th>Dia de ultimo pesaje</th>
+    </thead>
+    <tbody>
+      <% animales.each do |a| %>
+      <% este_animal = Pesaje.where("id_2"=>a.id_2) %>
+      <tr>
+        <td><%= a.id_2 %></td>
+        <td><%= maximos_x_vaca[a.id_2] %></td>
+        <% produccion = este_animal.order("pesaje ASC") %>
+        <% base = produccion.first.del * produccion.first.lvd.to_f %>
+        <% produccion.each_with_index do |f, i| %>
+          <% if i > 1 %>
+            <% promedio = (f.lvd.to_f + produccion[i-1].lvd.to_f )/2 %>
+            <% puts promedio %>
+            <% dias = (f.pesaje - produccion[i-1].pesaje).to_i %>
+            <% puts dias %>
+            <% base = base + (promedio * dias) %>
+          <% end %>
+        <% end %>
+        <td><%= base.round(2) %></td>
+        <td><%= este_animal.order("pesaje DESC").first.del %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <table class="table table-striped" style="width: 50%;">Pesajes
+    <thead>
+      <tr>
+        <th>Id 2</th>
+        <th>Parto</th>
+        <th>Pesaje</th>
+        <th>Del</th>
+        <th>Lvd</th>
+        <th>Raza</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @pesajes.each do |pesaje| %>
+        <tr>
+          <td><%= pesaje.id_2 %></td>
+          <td><%= pesaje.parto %></td>
+          <td><%= pesaje.pesaje %></td>
+          <td><%= pesaje.del %></td>
+          <td><%= pesaje.lvd %></td>
+          <td><%= pesaje.raza %></td>
+          <td><%= link_to 'Show', pesaje %></td>
+          <td><%= link_to 'Edit', edit_pesaje_path(pesaje) %></td>
+          <td><%= link_to 'Destroy', pesaje, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<div >
+  <%= form_tag import_pesajes_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Cargar CSV" %>
+  <% end %>
+</div>
+
+<br>
+
+
+<%= link_to 'New Pesaje', new_pesaje_path %>

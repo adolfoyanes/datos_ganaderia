@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_2: 1
+  anonac: 1
+  padre: MyString
+  nropar: 1
+  grupo_racial: 9.99
+  tipser: MyString
+  toroas: MyString
+  diagno: MyString
+  fparto: 2017-06-28
+  becerro: MyString
+  sexo: MyString
+  pesonacer: 9.99
+  pesodestete: 9.99
+  peso18: 9.99
+
+two:
+  id_2: 1
+  anonac: 1
+  padre: MyString
+  nropar: 1
+  grupo_racial: 9.99
+  tipser: MyString
+  toroas: MyString
+  diagno: MyString
+  fparto: 2017-06-28
+  becerro: MyString
+  sexo: MyString
+  pesonacer: 9.99
+  pesodestete: 9.99
+  peso18: 9.99
