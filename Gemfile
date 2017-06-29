@@ -37,6 +37,8 @@ gem 'jbuilder', '~> 2.5'
 ## charts 
 gem "chartkick"
 
+gem 'rails_12factor', group: :production
+
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
