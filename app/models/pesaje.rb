@@ -27,4 +27,24 @@ class Pesaje < ApplicationRecord
         end ### cierra do
         return base
     end
+    def self.produccion_acumulada_lactancia(este_animal, lactancia)
+         produccion = este_animal.where("lactancia"=>lactancia).order("pesaje ASC")
+         if produccion.size > 0 
+             base = produccion.first.del * produccion.first.lvd.to_f 
+             produccion.each_with_index do |f, i| 
+               if i > 1 
+                 promedio = (f.lvd.to_f + produccion[i-1].lvd.to_f )/2 
+                 puts promedio 
+                 dias = (f.pesaje - produccion[i-1].pesaje).to_i 
+                 puts dias 
+                 base = base + (promedio * dias) 
+                 puts base.class
+                 puts f.id_2
+               end ## cierra if
+            end ### cierra do
+        else
+            base = 0
+        end
+        return base
+    end
 end

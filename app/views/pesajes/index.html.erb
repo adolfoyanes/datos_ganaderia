@@ -28,23 +28,28 @@
  <% animales = Pesaje.select("id_2").group("id_2") %>
   <table class="table table-striped" style="width: 50%;">Resultados por animal
     <thead>
-      <th>Id 2</th>
-      <th>Dias maximo de lactancia</th>
-      <th>Dia de ultimo pesaje</th>
-      <th>Produccion Acumulada</th>
-      <th>Produccion Promedio por dia</th>
+      <th style="text-align:center">Id 2</th>
+      <th style="text-align:center">Dias maximo de lactancia</th>
+      <th style="text-align:center">Dia de ultimo pesaje</th>
+      <th style="text-align:center">Produccion Acumulada</th>
+      <th style="text-align:center">Produccion Promedio por dia</th>
+      <% lactancias_totales = Pesaje.select("lactancia").group("lactancia").order("lactancia ASC") %>
+      <% lactancias_totales.each do |l| %>
+        <th style="text-align:center">Lactancia <%= l.lactancia %></th>
+      <% end %>
     </thead>
     <tbody>
       <% animales.each do |a| %>
       <% este_animal = Pesaje.where("id_2"=>a.id_2) %>
       <tr>
-        <td><%= a.id_2 %></td>
-        <td><%= maximos_x_vaca[a.id_2] %></td>
-        
-        <td><%= este_animal.order("pesaje DESC").first.del %></td>
-        <% resultado = Pesaje.produccion_acumulada(este_animal) %>
-        <td><%= resultado.round(2) %></td>
-        <td><%= este_animal.average("lvd").round(2) %>
+        <td style="text-align:center"><%= a.id_2 %></td>
+        <td style="text-align:center"><%= maximos_x_vaca[a.id_2] %></td>
+        <td style="text-align:center"><%= este_animal.order("pesaje DESC").first.del %></td>
+        <td style="text-align:center"><%= Pesaje.produccion_acumulada(este_animal).round(2) %></td>
+        <td style="text-align:center"><%= este_animal.average("lvd").round(2) %>
+        <% lactancias_totales.each do |l| %>
+          <td style="text-align:center"><%= Pesaje.produccion_acumulada_lactancia(este_animal, l.lactancia).round(2) %></td>
+        <% end %>
       </tr>
       <% end %>
     </tbody>
