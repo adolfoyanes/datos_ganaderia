@@ -5,8 +5,8 @@ class PesajesController < ApplicationController
   # GET /pesajes.json
   def index
     @pesajes = Pesaje.all
-    los_animales  = Pesaje.select("id_2").group("id_2") 
-    @promedio_glob = Pesaje.promedio_total(los_animales)
+    @los_animales  = Pesaje.select("id_2").group("id_2") 
+    @promedio_glob = Pesaje.promedio_total(@los_animales)
   end
 
   # GET /pesajes/1

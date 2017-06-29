@@ -25,7 +25,7 @@
 </div>
 
 <div>
- <% animales = Pesaje.select("id_2").group("id_2") %>
+ <% animales = @los_animales %>
   <table class="table table-striped" style="width: 50%;">Resultados por animal
     <thead>
       <th style="text-align:center">Id 2</th>
@@ -66,7 +66,7 @@
 
 
 <div>
- <% animales = Pesaje.select("id_2").group("id_2") %>
+ <% animales = @los_animales %>
   <table class="table table-striped" style="width: 50%;"><h2>Lactancia Ajustada a 305 dias</h2>
     <thead>
       <th style="text-align:center">Id 2</th>
@@ -99,7 +99,7 @@
 
 
 <div>
- <% animales = Pesaje.select("id_2").group("id_2") %>
+ <% animales = @los_animales %>
   <table class="table table-striped" style="width: 50%;"><h2>Puntaje</h2>
     <thead>
       <th style="text-align:center">Id 2</th>
