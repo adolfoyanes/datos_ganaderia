@@ -12,7 +12,7 @@ class Pesaje < ApplicationRecord
     end
 
     def self.produccion_acumulada(este_animal)
-         produccion = este_animal.order("pesaje ASC") 
+         produccion = este_animal.order("del ASC") 
          base = produccion.first.del * produccion.first.lvd.to_f 
          produccion.each_with_index do |f, i| 
            if i > 1 
@@ -28,7 +28,7 @@ class Pesaje < ApplicationRecord
         return base
     end
     def self.produccion_acumulada_lactancia(este_animal, lactancia)
-         produccion = este_animal.where("lactancia"=>lactancia).order("pesaje ASC")
+         produccion = este_animal.where("lactancia"=>lactancia).order("del ASC")
          if produccion.size > 0 
              base = produccion.first.del * produccion.first.lvd.to_f 
              produccion.each_with_index do |f, i| 
