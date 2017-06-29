@@ -7,7 +7,7 @@
  <%  maximos_x_vaca = Pesaje.group("id_2").maximum(:del) %>
  <% maximos = maximos_x_vaca.values %>
  <p>Promedio Días de Lactancia: <%= (maximos.inject{ |sum, el| sum + el }.to_f / maximos.size).round(2) %> </p> 
- <ul>Número de Animales por raza
+ <ul >Número de Animales por raza
   <% razas = Pesaje.select("raza, count(raza) as total").group("raza") %>
   <% razas.each do |t| %>
    <li> <%= t.raza %>: <%= t.total %> </li>
@@ -51,10 +51,20 @@
           <td style="text-align:center"><%= Pesaje.produccion_acumulada_lactancia(este_animal, l.lactancia).round(2) %></td>
         <% end %>
       </tr>
+      <tr>
+        <% line_chart este_animal.pluck(:del, :lvd), curve: false %>
+
+        <%= scatter_chart [
+                          {name: "Lactancia 1", data: este_animal.where("lactancia"=>1).order("del asc").pluck(:del, :lvd)},
+                          {name: "Lactancia 2", data: este_animal.where("lactancia"=>2).order("del asc").pluck(:del, :lvd)}
+                        ] %>
+      </tr>
       <% end %>
     </tbody>
   </table>
 </div>
+
+
 
 <div>
   <table class="table table-striped" style="width: 50%;">Pesajes
