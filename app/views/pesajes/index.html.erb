@@ -7,13 +7,13 @@
  <%  maximos_x_vaca = Pesaje.group("id_2").maximum(:del) %>
  <% maximos = maximos_x_vaca.values %>
  <p>Promedio Días de Lactancia: <%= (maximos.inject{ |sum, el| sum + el }.to_f / maximos.size).round(2) %> </p> 
- <ul>Número de Animales
+ <ul>Número de Animales por raza
   <% razas = Pesaje.select("raza, count(raza) as total").group("raza") %>
   <% razas.each do |t| %>
    <li> <%= t.raza %>: <%= t.total %> </li>
   <% end %>
  </ul>
-  <ul>Días promedio de lactancia
+  <ul>Días promedio de lactancia por raza
  
   <% razas.each do |t| %>
     <% maximos_raza = Pesaje.where("raza"=>t.raza).group("id_2").maximum(:del) %>
@@ -30,8 +30,9 @@
     <thead>
       <th>Id 2</th>
       <th>Dias maximo de lactancia</th>
-      <th>Produccion Acumulada</th>
       <th>Dia de ultimo pesaje</th>
+      <th>Produccion Acumulada</th>
+      <th>Produccion Promedio por dia</th>
     </thead>
     <tbody>
       <% animales.each do |a| %>
@@ -50,8 +51,9 @@
             <% base = base + (promedio * dias) %>
           <% end %>
         <% end %>
-        <td><%= base.round(2) %></td>
         <td><%= este_animal.order("pesaje DESC").first.del %></td>
+        <td><%= base.round(2) %></td>
+        <Td><%= este_animal.average("lvd").round(2) %>
       </tr>
       <% end %>
     </tbody>
@@ -62,12 +64,13 @@
   <table class="table table-striped" style="width: 50%;">Pesajes
     <thead>
       <tr>
-        <th>Id 2</th>
-        <th>Parto</th>
-        <th>Pesaje</th>
-        <th>Del</th>
-        <th>Lvd</th>
-        <th>Raza</th>
+        <th style="text-align:center">Id 2</th>
+        <th style="text-align:center">Parto</th>
+        <th style="text-align:center">Pesaje</th>
+        <th style="text-align:center">Del</th>
+        <th style="text-align:center">Lvd</th>
+        <th style="text-align:center">Raza</th>
+        <th style="text-align:center">Lactancia</th>
         <th colspan="3"></th>
       </tr>
     </thead>
@@ -75,15 +78,16 @@
     <tbody>
       <% @pesajes.each do |pesaje| %>
         <tr>
-          <td><%= pesaje.id_2 %></td>
-          <td><%= pesaje.parto %></td>
-          <td><%= pesaje.pesaje %></td>
-          <td><%= pesaje.del %></td>
-          <td><%= pesaje.lvd %></td>
-          <td><%= pesaje.raza %></td>
-          <td><%= link_to 'Show', pesaje %></td>
-          <td><%= link_to 'Edit', edit_pesaje_path(pesaje) %></td>
-          <td><%= link_to 'Destroy', pesaje, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td style="text-align:center"><%= pesaje.id_2 %></td>
+          <td style="text-align:center"><%= pesaje.parto %></td>
+          <td style="text-align:center"><%= pesaje.pesaje %></td>
+          <td style="text-align:center"><%= pesaje.del %></td>
+          <td style="text-align:center"><%= pesaje.lvd %></td>
+          <td style="text-align:center"><%= pesaje.raza %></td>
+          <td style="text-align:center"><%= pesaje.lactancia%></td>
+          <td style="text-align:center"><%= link_to 'Show', pesaje %></td>
+          <td style="text-align:center"><%= link_to 'Edit', edit_pesaje_path(pesaje) %></td>
+          <td style="text-align:center"><%= link_to 'Destroy', pesaje, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
