@@ -12,33 +12,28 @@ class Pesaje < ApplicationRecord
     end
 
     def self.produccion_acumulada(este_animal)
-         produccion = este_animal.order("del ASC") 
-         base = produccion.first.del * produccion.first.lvd.to_f 
-         produccion.each_with_index do |f, i| 
-           if i > 1 
-             promedio = (f.lvd.to_f + produccion[i-1].lvd.to_f )/2 
-             puts promedio 
-             dias = (f.pesaje - produccion[i-1].pesaje).to_i 
-             puts dias 
-             base = base + (promedio * dias) 
-             puts base.class
-             puts f.id_2
-           end ## cierra if
-        end ### cierra do
-        return base
+        lactancias_totales = Pesaje.select("lactancia").group("lactancia").order("lactancia ASC")
+        acumulado = 0
+        lactancias_totales.each do |f|
+            acumulado = acumulado + Pesaje.produccion_acumulada_lactancia(este_animal, f.lactancia).round(2)
+        end
+        return acumulado
     end
     def self.produccion_acumulada_lactancia(este_animal, lactancia)
          produccion = este_animal.where("lactancia"=>lactancia).order("del ASC")
          if produccion.size > 0 
              base = produccion.first.del * produccion.first.lvd.to_f 
+             puts "base inicial"
+             puts base
              produccion.each_with_index do |f, i| 
-               if i > 1 
+                puts i
+               if i > 0
                  promedio = (f.lvd.to_f + produccion[i-1].lvd.to_f )/2 
                  puts promedio 
-                 dias = (f.pesaje - produccion[i-1].pesaje).to_i 
+                 dias = (f.del - produccion[i-1].del).to_i 
                  puts dias 
                  base = base + (promedio * dias) 
-                 puts base.class
+                 puts base
                  puts f.id_2
                end ## cierra if
             end ### cierra do
