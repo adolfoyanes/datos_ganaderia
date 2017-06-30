@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170630165905) do
+ActiveRecord::Schema.define(version: 20170630170350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,12 +51,13 @@ ActiveRecord::Schema.define(version: 20170630165905) do
     t.decimal  "acum_305d"
     t.string   "removida"
     t.date     "fecha_salida"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.integer  "ipp"
     t.decimal  "er"
     t.decimal  "indice"
     t.decimal  "ind_leche"
+    t.decimal  "ind_combinado"
   end
 
   create_table "vacas", force: :cascade do |t|

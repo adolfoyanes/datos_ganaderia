@@ -17,6 +17,8 @@ class Reproduccion < ApplicationRecord
         Reproduccion.ir(Reproduccion.all)
         ## sacar indice de leche a los 305
         Reproduccion.ileche(Reproduccion.all)
+        ## sacar el indice combinado
+        Reproduccion.icombinado(Reproduccion.all)
     end
 
     def self.ipp(vacas)
@@ -55,7 +57,15 @@ class Reproduccion < ApplicationRecord
     			v.save
     		end
     	end
+    end
 
+    def self.icombinado(vacas)
+    	vacas.each do |v|
+    		if v.indice && v.ind_leche
+    			v.ind_combinado = v.indice.to_f*0.5 +  v.ind_leche.to_f*0.5
+    			v.save
+    		end
+    	end
     end
 
 end
