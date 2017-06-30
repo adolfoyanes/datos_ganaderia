@@ -1,0 +1,51 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_2: MyString
+  nacimiento: 2017-06-30
+  anonac: 1
+  padre: MyString
+  madre: MyString
+  lact: 1
+  id_lact: MyString
+  parto: 2017-06-30
+  anopart: 1
+  mesparto: 1
+  cria: MyString
+  sexo_cria: MyString
+  padre_cria: MyString
+  meses_parto: 1
+  prenez: 2017-06-30
+  toro_prenez: MyString
+  servicios: 1
+  secado: 2017-06-30
+  lechetotal: 9.99
+  del: 1
+  acum_305d: 9.99
+  removida: MyString
+  fecha_salida: 2017-06-30
+
+two:
+  id_2: MyString
+  nacimiento: 2017-06-30
+  anonac: 1
+  padre: MyString
+  madre: MyString
+  lact: 1
+  id_lact: MyString
+  parto: 2017-06-30
+  anopart: 1
+  mesparto: 1
+  cria: MyString
+  sexo_cria: MyString
+  padre_cria: MyString
+  meses_parto: 1
+  prenez: 2017-06-30
+  toro_prenez: MyString
+  servicios: 1
+  secado: 2017-06-30
+  lechetotal: 9.99
+  del: 1
+  acum_305d: 9.99
+  removida: MyString
+  fecha_salida: 2017-06-30

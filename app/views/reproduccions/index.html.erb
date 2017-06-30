@@ -1,0 +1,78 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Reproduccions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id 2</th>
+      <th>Nacimiento</th>
+      <th>Anonac</th>
+      <th>Padre</th>
+      <th>Madre</th>
+      <th>Lact</th>
+      <th>Id lact</th>
+      <th>Parto</th>
+      <th>Anopart</th>
+      <th>Mesparto</th>
+      <th>Cria</th>
+      <th>Sexo cria</th>
+      <th>Padre cria</th>
+      <th>Meses parto</th>
+      <th>Prenez</th>
+      <th>Toro prenez</th>
+      <th>Servicios</th>
+      <th>Secado</th>
+      <th>Lechetotal</th>
+      <th>Del</th>
+      <th>Acum 305d</th>
+      <th>Removida</th>
+      <th>Fecha salida</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reproduccions.each do |reproduccion| %>
+      <tr>
+        <td><%= reproduccion.id_2 %></td>
+        <td><%= reproduccion.nacimiento %></td>
+        <td><%= reproduccion.anonac %></td>
+        <td><%= reproduccion.padre %></td>
+        <td><%= reproduccion.madre %></td>
+        <td><%= reproduccion.lact %></td>
+        <td><%= reproduccion.id_lact %></td>
+        <td><%= reproduccion.parto %></td>
+        <td><%= reproduccion.anopart %></td>
+        <td><%= reproduccion.mesparto %></td>
+        <td><%= reproduccion.cria %></td>
+        <td><%= reproduccion.sexo_cria %></td>
+        <td><%= reproduccion.padre_cria %></td>
+        <td><%= reproduccion.meses_parto %></td>
+        <td><%= reproduccion.prenez %></td>
+        <td><%= reproduccion.toro_prenez %></td>
+        <td><%= reproduccion.servicios %></td>
+        <td><%= reproduccion.secado %></td>
+        <td><%= reproduccion.lechetotal %></td>
+        <td><%= reproduccion.del %></td>
+        <td><%= reproduccion.acum_305d %></td>
+        <td><%= reproduccion.removida %></td>
+        <td><%= reproduccion.fecha_salida %></td>
+        <td><%= link_to 'Show', reproduccion %></td>
+        <td><%= link_to 'Edit', edit_reproduccion_path(reproduccion) %></td>
+        <td><%= link_to 'Destroy', reproduccion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<div >
+  <%= form_tag import_reproduccions_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Cargar CSV" %>
+  <% end %>
+</div>
+<br>
+
+<%= link_to 'New Reproduccion', new_reproduccion_path %>

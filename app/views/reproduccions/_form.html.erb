@@ -1,0 +1,132 @@
+<%= form_for(reproduccion) do |f| %>
+  <% if reproduccion.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(reproduccion.errors.count, "error") %> prohibited this reproduccion from being saved:</h2>
+
+      <ul>
+      <% reproduccion.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :id_2 %>
+    <%= f.text_field :id_2 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :nacimiento %>
+    <%= f.date_select :nacimiento %>
+  </div>
+
+  <div class="field">
+    <%= f.label :anonac %>
+    <%= f.number_field :anonac %>
+  </div>
+
+  <div class="field">
+    <%= f.label :padre %>
+    <%= f.text_field :padre %>
+  </div>
+
+  <div class="field">
+    <%= f.label :madre %>
+    <%= f.text_field :madre %>
+  </div>
+
+  <div class="field">
+    <%= f.label :lact %>
+    <%= f.number_field :lact %>
+  </div>
+
+  <div class="field">
+    <%= f.label :id_lact %>
+    <%= f.text_field :id_lact %>
+  </div>
+
+  <div class="field">
+    <%= f.label :parto %>
+    <%= f.date_select :parto %>
+  </div>
+
+  <div class="field">
+    <%= f.label :anopart %>
+    <%= f.number_field :anopart %>
+  </div>
+
+  <div class="field">
+    <%= f.label :mesparto %>
+    <%= f.number_field :mesparto %>
+  </div>
+
+  <div class="field">
+    <%= f.label :cria %>
+    <%= f.text_field :cria %>
+  </div>
+
+  <div class="field">
+    <%= f.label :sexo_cria %>
+    <%= f.text_field :sexo_cria %>
+  </div>
+
+  <div class="field">
+    <%= f.label :padre_cria %>
+    <%= f.text_field :padre_cria %>
+  </div>
+
+  <div class="field">
+    <%= f.label :meses_parto %>
+    <%= f.number_field :meses_parto %>
+  </div>
+
+  <div class="field">
+    <%= f.label :prenez %>
+    <%= f.date_select :prenez %>
+  </div>
+
+  <div class="field">
+    <%= f.label :toro_prenez %>
+    <%= f.text_field :toro_prenez %>
+  </div>
+
+  <div class="field">
+    <%= f.label :servicios %>
+    <%= f.number_field :servicios %>
+  </div>
+
+  <div class="field">
+    <%= f.label :secado %>
+    <%= f.date_select :secado %>
+  </div>
+
+  <div class="field">
+    <%= f.label :lechetotal %>
+    <%= f.text_field :lechetotal %>
+  </div>
+
+  <div class="field">
+    <%= f.label :del %>
+    <%= f.number_field :del %>
+  </div>
+
+  <div class="field">
+    <%= f.label :acum_305d %>
+    <%= f.text_field :acum_305d %>
+  </div>
+
+  <div class="field">
+    <%= f.label :removida %>
+    <%= f.text_field :removida %>
+  </div>
+
+  <div class="field">
+    <%= f.label :fecha_salida %>
+    <%= f.date_select :fecha_salida %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
