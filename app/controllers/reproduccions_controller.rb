@@ -5,6 +5,8 @@ class ReproduccionsController < ApplicationController
   # GET /reproduccions.json
   def index
     @reproduccions = Reproduccion.all
+    @vacas = Reproduccion.select("id_2").group("id_2")
+    dias = Reproduccion.ipp(@vacas)
   end
 
   # GET /reproduccions/1
