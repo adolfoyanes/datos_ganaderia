@@ -15,6 +15,8 @@ class Reproduccion < ApplicationRecord
         Reproduccion.ipp(Reproduccion.all)
         ## sacar indice reproductivo
         Reproduccion.ir(Reproduccion.all)
+        ## sacar indice de leche a los 305
+        Reproduccion.ileche(Reproduccion.all)
     end
 
     def self.ipp(vacas)
@@ -43,7 +45,16 @@ class Reproduccion < ApplicationRecord
     			v.save
     		end
     	end
+    end
 
+    def self.ileche(vacas)
+    	promedio = vacas.where("acum_305d is not null").average("acum_305d").round(2)
+    	vacas.each do |v|
+    		if v.acum_305d 
+    			v.ind_leche = (v.acum_305d.to_f/promedio.to_f)*100
+    			v.save
+    		end
+    	end
 
     end
 

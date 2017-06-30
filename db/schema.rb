@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170630165236) do
+ActiveRecord::Schema.define(version: 20170630165905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20170630165236) do
     t.integer  "ipp"
     t.decimal  "er"
     t.decimal  "indice"
+    t.decimal  "ind_leche"
   end
 
   create_table "vacas", force: :cascade do |t|
