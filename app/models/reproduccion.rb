@@ -11,31 +11,40 @@ class Reproduccion < ApplicationRecord
           Reproduccion.create! row.to_hash
         end
 
-        ### sacar el ipp
-
+        ### sacar el ipp y ER
         Reproduccion.ipp(Reproduccion.all)
+        ## sacar indice reproductivo
+        Reproduccion.ir(Reproduccion.all)
     end
 
     def self.ipp(vacas)
-    	intervalos = []
-    	er = []
     	vacas.each do |v|
     		partos = Reproduccion.where("id_2"=>v.id_2).order("parto asc")
     		partos.each_with_index do |f, i|
     			if i > 0 && f.parto.present? && partos[i-1].parto.present?
     				ipp = (f.parto - partos[i-1].parto).to_i
     				f.ipp = ipp
+    				f.er = (1/ipp.to_f)*1000
     				f.save
     				puts ipp
-    				intervalos << ipp
-    				er << (1/ipp.to_f)*1000
     			else
     				puts "no"
     			end
        		end
     	end
-
-
     end ## cierra ipp
+
+    def self.ir(vacas)
+
+    	ips = vacas.where("ipp is not null").average("er").round(2)
+    	vacas.each do |v|
+    		if v.er 
+    			v.indice = (v.er.to_f/ips.to_f)*100
+    			v.save
+    		end
+    	end
+
+
+    end
 
 end
