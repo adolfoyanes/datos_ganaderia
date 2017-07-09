@@ -22,6 +22,7 @@ class VacasController < ApplicationController
   end
 
   def import
+      Vaca.delete_all
       Vaca.import(params[:file])
       redirect_to vacas_path, notice: "vacas agregadas"
   end

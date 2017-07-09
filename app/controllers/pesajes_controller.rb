@@ -24,6 +24,7 @@ class PesajesController < ApplicationController
   end
 
   def import
+      Pesaje.delete_all
       Pesaje.import(params[:file])
       redirect_to pesajes_path, notice: "pesajes agregados"
   end

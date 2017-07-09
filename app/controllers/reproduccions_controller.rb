@@ -24,6 +24,7 @@ class ReproduccionsController < ApplicationController
   end
 
   def import
+      Reproduccion.delete_all
       Reproduccion.import(params[:file])
       redirect_to reproduccions_path, notice: "pesajes agregados"
   end
